@@ -32,7 +32,7 @@ def load_cafes(path :str) -> list:
 
 def main():
     homepages = {}
-    cafes = load_cafes('/Users/aske/Documents/Thesis/Project/data/cafes_raw.json')
+    cafes = load_cafes('data/cafes_raw.json')
 
     try:
         with open("data/homepages.json") as f:

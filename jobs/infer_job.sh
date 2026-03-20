@@ -26,7 +26,7 @@ sleep 10
 source venv/bin/activate
 
 # Run link filtering
-python3 -u filter_links.py
+python3 -u pipeline/filter_links.py
 
 # Shut down Ollama
 kill $OLLAMA_PID
