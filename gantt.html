@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Thesis Gantt Chart</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: #0f1117;
+    color: #e0e0e0;
+    padding: 40px 24px;
+  }
+  h1 {
+    text-align: center;
+    font-size: 1.3rem;
+    font-weight: 500;
+    color: #aaa;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .subtitle {
+    text-align: center;
+    font-size: 0.8rem;
+    color: #444;
+    margin-bottom: 36px;
+  }
+
+  .gantt-wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+    overflow-x: auto;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.78rem;
+  }
+
+  /* Header row — week numbers */
+  .col-label { width: 220px; min-width: 220px; }
+  th {
+    padding: 6px 4px;
+    text-align: center;
+    color: #444;
+    font-weight: 400;
+    border-bottom: 1px solid #1e1e1e;
+    font-size: 0.7rem;
+    white-space: nowrap;
+  }
+  th.month-header {
+    color: #666;
+    font-weight: 600;
+    font-size: 0.72rem;
+    border-bottom: 1px solid #2a2a2a;
+    padding-bottom: 3px;
+  }
+  th.today-col {
+    color: #e0a050;
+  }
+
+  /* Task rows */
+  tr.phase-row td {
+    background: #111318;
+    color: #888;
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 10px 8px 4px 8px;
+    border-top: 1px solid #1e1e1e;
+  }
+  tr.task-row td {
+    padding: 3px 2px;
+    vertical-align: middle;
+  }
+  td.task-label {
+    padding: 4px 10px 4px 16px;
+    color: #bbb;
+    white-space: nowrap;
+    font-size: 0.78rem;
+  }
+  td.task-label.done { color: #4caf82; }
+  td.task-label.active { color: #e0a050; }
+  td.cell {
+    padding: 3px 2px;
+    min-width: 28px;
+    text-align: center;
+  }
+
+  /* Bar cells */
+  .bar {
+    height: 18px;
+    border-radius: 3px;
+    width: 100%;
+  }
+  .bar-done     { background: #2d6b4a; }
+  .bar-active   { background: #6b4e2a; }
+  .bar-future   { background: #1a2a3a; }
+  .bar-writing  { background: #2a1a3a; }
+  .bar-buffer   { background: #1e1e1e; border: 1px dashed #333; }
+
+  /* Today marker column */
+  td.today-col { border-left: 2px solid #e0a050 !important; }
+  th.today-col { border-left: 2px solid #e0a050; }
+
+  /* Deadline column */
+  td.deadline-col { border-right: 2px solid #c04040 !important; }
+  th.deadline-col { border-right: 2px solid #c04040; color: #c04040; }
+
+  /* Legend */
+  .legend {
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    margin-top: 28px;
+    flex-wrap: wrap;
+  }
+  .legend-item { display: flex; align-items: center; gap: 8px; font-size: 0.75rem; color: #555; }
+  .legend-block { width: 24px; height: 12px; border-radius: 2px; }
+
+  .marker-row {
+    font-size: 0.65rem;
+    color: #555;
+    text-align: center;
+  }
+  .marker-today { color: #e0a050; font-weight: 600; }
+  .marker-deadline { color: #c04040; font-weight: 600; }
+</style>
+</head>
+<body>
+
+<h1>Thesis Gantt Chart</h1>
+<p class="subtitle">Jan 26 – Jun 15, 2026 &nbsp;·&nbsp; Learning Representations of Urban Businesses from Noisy and Incomplete Web Data</p>
+
+<div class="gantt-wrap">
+<table>
+<thead>
+  <tr>
+    <th class="col-label"></th>
+    <!-- Jan -->
+    <th colspan="1" class="month-header">Jan</th>
+    <!-- Feb -->
+    <th colspan="4" class="month-header">February</th>
+    <!-- Mar -->
+    <th colspan="4" class="month-header">March</th>
+    <!-- Apr -->
+    <th colspan="4" class="month-header">April</th>
+    <!-- May -->
+    <th colspan="4" class="month-header">May</th>
+    <!-- Jun -->
+    <th colspan="3" class="month-header">June</th>
+  </tr>
+  <tr>
+    <th class="col-label"></th>
+    <!-- Jan W4 -->
+    <th>W4</th>
+    <!-- Feb -->
+    <th>W5</th><th>W6</th><th>W7</th><th class="today-col">W8 ◂today</th>
+    <!-- Mar -->
+    <th>W9</th><th>W10</th><th>W11</th><th>W12</th>
+    <!-- Apr -->
+    <th>W13</th><th>W14</th><th>W15</th><th>W16</th>
+    <!-- May -->
+    <th>W17</th><th>W18</th><th>W19</th><th>W20</th>
+    <!-- Jun -->
+    <th>W21</th><th>W22</th><th class="deadline-col">W24 ✕</th>
+  </tr>
+</thead>
+<tbody>
+
+<!-- ── PHASE 1: Data Collection ── -->
+<tr class="phase-row">
+  <td colspan="21">Phase 1 — Data Collection & Base Dataset</td>
+</tr>
+
+<tr class="task-row">
+  <td class="task-label done">✓ OSM fetch (Overpass API)</td>
+  <td><div class="bar bar-done"></div></td><!-- W4 -->
+  <td></td><td></td><td></td><td class="today-col"></td><!-- Feb -->
+  <td></td><td></td><td></td><td></td><!-- Mar -->
+  <td></td><td></td><td></td><td></td><!-- Apr -->
+  <td></td><td></td><td></td><td></td><!-- May -->
+  <td></td><td></td><td class="deadline-col"></td><!-- Jun -->
+</tr>
+
+<tr class="task-row">
+  <td class="task-label done">✓ Map visualisation</td>
+  <td><div class="bar bar-done"></div></td>
+  <td><div class="bar bar-done"></div></td>
+  <td></td><td></td><td class="today-col"></td>
+  <td></td><td></td><td></td><td></td>
+  <td></td><td></td><td></td><td></td>
+  <td></td><td></td><td></td><td></td>
+  <td></td><td></td><td class="deadline-col"></td>
+</tr>
+
+<tr class="task-row">
+  <td class="task-label active">◑ Tag frequency analysis</td>
+  <td></td>
+  <td></td><td></td><td></td><td class="today-col"><div class="bar bar-active"></div></td>
+  <td><div class="bar bar-active"></div></td><td></td><td></td><td></td>
+  <td></td><td></td><td></td><td></td>
+  <td></td><td></td><td></td><td></td>
+  <td></td><td></td><td class="deadline-col"></td>
+</tr>
+
+<tr class="task-row">
+  <td class="task-label active">◑ Spatial join — bydele districts</td>
+  <td></td>
+  <td></td><td></td><td></td><td class="today-col"><div class="bar bar-active"></div></td>
+  <td><div class="bar bar-active"></div></td><td></td><td></td><td></td>
+  <td></td><td></td><td></td><td></td>
+  <td></td><td></td><td></td><td></td>
+  <td></td><td></td><td class="deadline-col"></td>
+</tr>
+
+<!-- ── PHASE 2: Data Enrichment ── -->
+<tr class="phase-row">
+  <td colspan="21">Phase 2 — Data Enrichment & Web Scraping</td>
+</tr>
+
+<tr class="task-row">
+  <td class="task-label">Read supervisor papers</td>
+  <td></td>
+  <td></td><td></td><td></td><td class="today-col"><div class="bar bar-active"></div></td>
+  <td><div class="bar bar-active"></div></td><td></td><td></td><td></td>
+  <td></td><td></td><td></td><td></td>
+  <td></td><td></td><td></td><td></td>
+  <td></td><td></td><td class="deadline-col"></td>
+</tr>
+
+<tr class="task-row">
+  <td class="task-label">Scrape venues WITH websites</td>
+  <td></td>
+  <td></td><td></td><td></td><td class="today-col"></td>
+  <td><div class="bar bar-future"></div></td><td><div class="bar bar-future"></div></td><td></td><td></td>
+  <td></td><td></td><td></td><td></td>
+  <td></td><td></td><td></td><td></td>
+  <td></td><td></td><td class="deadline-col"></td>
+</tr>
+
+<tr class="task-row">
+  <td class="task-label">Find + enrich venues WITHOUT websites</td>
+  <td></td>
+  <td></td><td></td><td></td><td class="today-col"></td>
+  <td></td><td><div class="bar bar-future"></div></td><td><div class="bar bar-future"></div></td><td></td>
+  <td></td><td></td><td></td><td></td>
+  <td></td><td></td><td></td><td></td>
+  <td></td><td></td><td class="deadline-col"></td>
+</tr>
+
+<tr class="task-row">
+  <td class="task-label">Decide + integrate open source LLM</td>
+  <td></td>
+  <td></td><td></td><td></td><td class="today-col"></td>
+  <td></td><td><div class="bar bar-future"></div></td><td><div class="bar bar-future"></div></td><td></td>
+  <td></td><td></td><td></td><td></td>
+  <td></td><td></td><td></td><td></td>
+  <td></td><td></td><td class="deadline-col"></td>
+</tr>
+
+<!-- ── PHASE 3: Feature Engineering ── -->
+<tr class="phase-row">
+  <td colspan="21">Phase 3 — Feature Engineering & Representations</td>
+</tr>
+
+<tr class="task-row">
+  <td class="task-label">Text cleaning & menu extraction</td>
+  <td></td>
+  <td></td><td></td><td></td><td class="today-col"></td>
+  <td></td><td></td><td><div class="bar bar-future"></div></td><td><div class="bar bar-future"></div></td>
+  <td></td><td></td><td></td><td></td>
+  <td></td><td></td><td></td><td></td>
+  <td></td><td></td><td class="deadline-col"></td>
+</tr>
+
+<tr class="task-row">
+  <td class="task-label">Multilingual text embeddings</td>
+  <td></td>
+  <td></td><td></td><td></td><td class="today-col"></td>
+  <td></td><td></td><td></td><td><div class="bar bar-future"></div></td>
+  <td><div class="bar bar-future"></div></td><td></td><td></td><td></td>
+  <td></td><td></td><td></td><td></td>
+  <td></td><td></td><td class="deadline-col"></td>
+</tr>
+
+<tr class="task-row">
+  <td class="task-label">Unified feature vectors per café</td>
+  <td></td>
+  <td></td><td></td><td></td><td class="today-col"></td>
+  <td></td><td></td><td></td><td></td>
+  <td><div class="bar bar-future"></div></td><td><div class="bar bar-future"></div></td><td></td><td></td>
+  <td></td><td></td><td></td><td></td>
+  <td></td><td></td><td class="deadline-col"></td>
+</tr>
+
+<!-- ── PHASE 4: ML ── -->
+<tr class="phase-row">
+  <td colspan="21">Phase 4 — Unsupervised Learning</td>
+</tr>
+
+<tr class="task-row">
+  <td class="task-label">Clustering (K-Means / HDBSCAN)</td>
+  <td></td>
+  <td></td><td></td><td></td><td class="today-col"></td>
+  <td></td><td></td><td></td><td></td>
+  <td></td><td><div class="bar bar-future"></div></td><td><div class="bar bar-future"></div></td><td></td>
+  <td></td><td></td><td></td><td></td>
+  <td></td><td></td><td class="deadline-col"></td>
+</tr>
+
+<tr class="task-row">
+  <td class="task-label">UMAP / t-SNE visualisation</td>
+  <td></td>
+  <td></td><td></td><td></td><td class="today-col"></td>
+  <td></td><td></td><td></td><td></td>
+  <td></td><td></td><td><div class="bar bar-future"></div></td><td><div class="bar bar-future"></div></td>
+  <td></td><td></td><td></td><td></td>
+  <td></td><td></td><td class="deadline-col"></td>
+</tr>
+
+<!-- ── PHASE 5: Knowledge Completion ── -->
+<tr class="phase-row">
+  <td colspan="21">Phase 5 — Knowledge Completion</td>
+</tr>
+
+<tr class="task-row">
+  <td class="task-label">Predictive models (missing attributes)</td>
+  <td></td>
+  <td></td><td></td><td></td><td class="today-col"></td>
+  <td></td><td></td><td></td><td></td>
+  <td></td><td></td><td></td><td><div class="bar bar-future"></div></td>
+  <td><div class="bar bar-future"></div></td><td><div class="bar bar-future"></div></td><td></td><td></td>
+  <td></td><td></td><td class="deadline-col"></td>
+</tr>
+
+<tr class="task-row">
+  <td class="task-label">Evaluation & analysis</td>
+  <td></td>
+  <td></td><td></td><td></td><td class="today-col"></td>
+  <td></td><td></td><td></td><td></td>
+  <td></td><td></td><td></td><td></td>
+  <td></td><td><div class="bar bar-future"></div></td><td><div class="bar bar-future"></div></td><td></td>
+  <td></td><td></td><td class="deadline-col"></td>
+</tr>
+
+<!-- ── WRITING ── -->
+<tr class="phase-row">
+  <td colspan="21">Thesis Writing</td>
+</tr>
+
+<tr class="task-row">
+  <td class="task-label">Background & related work</td>
+  <td></td>
+  <td></td><td></td><td></td><td class="today-col"></td>
+  <td></td><td></td><td><div class="bar bar-writing"></div></td><td><div class="bar bar-writing"></div></td>
+  <td><div class="bar bar-writing"></div></td><td></td><td></td><td></td>
+  <td></td><td></td><td></td><td></td>
+  <td></td><td></td><td class="deadline-col"></td>
+</tr>
+
+<tr class="task-row">
+  <td class="task-label">Methodology chapter</td>
+  <td></td>
+  <td></td><td></td><td></td><td class="today-col"></td>
+  <td></td><td></td><td></td><td></td>
+  <td><div class="bar bar-writing"></div></td><td><div class="bar bar-writing"></div></td><td><div class="bar bar-writing"></div></td><td></td>
+  <td></td><td></td><td></td><td></td>
+  <td></td><td></td><td class="deadline-col"></td>
+</tr>
+
+<tr class="task-row">
+  <td class="task-label">Results & discussion</td>
+  <td></td>
+  <td></td><td></td><td></td><td class="today-col"></td>
+  <td></td><td></td><td></td><td></td>
+  <td></td><td></td><td></td><td><div class="bar bar-writing"></div></td>
+  <td><div class="bar bar-writing"></div></td><td><div class="bar bar-writing"></div></td><td><div class="bar bar-writing"></div></td><td></td>
+  <td></td><td></td><td class="deadline-col"></td>
+</tr>
+
+<tr class="task-row">
+  <td class="task-label">Introduction & conclusion</td>
+  <td></td>
+  <td></td><td></td><td></td><td class="today-col"></td>
+  <td></td><td></td><td></td><td></td>
+  <td></td><td></td><td></td><td></td>
+  <td></td><td></td><td><div class="bar bar-writing"></div></td><td><div class="bar bar-writing"></div></td>
+  <td></td><td></td><td class="deadline-col"></td>
+</tr>
+
+<tr class="task-row">
+  <td class="task-label">Review, polish & submit</td>
+  <td></td>
+  <td></td><td></td><td></td><td class="today-col"></td>
+  <td></td><td></td><td></td><td></td>
+  <td></td><td></td><td></td><td></td>
+  <td></td><td></td><td></td><td></td>
+  <td><div class="bar bar-writing"></div></td><td><div class="bar bar-writing"></div></td><td class="deadline-col"><div class="bar bar-writing"></div></td>
+</tr>
+
+</tbody>
+</table>
+</div>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-block" style="background:#2d6b4a"></div> Done</div>
+  <div class="legend-item"><div class="legend-block" style="background:#6b4e2a"></div> In progress</div>
+  <div class="legend-item"><div class="legend-block" style="background:#1a2a3a"></div> Planned (code/analysis)</div>
+  <div class="legend-item"><div class="legend-block" style="background:#2a1a3a"></div> Writing</div>
+  <div class="legend-item">
+    <div style="width:3px; height:14px; background:#e0a050; border-radius:1px;"></div> Today (Feb 22)
+  </div>
+  <div class="legend-item">
+    <div style="width:3px; height:14px; background:#c04040; border-radius:1px;"></div> Deadline (~Jun 15)
+  </div>
+</div>
+
+</body>
+</html>
